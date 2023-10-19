@@ -9,14 +9,13 @@ import SwiftUI
 
 struct LoginScreen: View {
     var body: some View {
-        VStack {
-            LogoImage();
-            NameAuthor();
-            Spacer()
-                .frame(height: 30)
-            LoginForm();
-        }
-    
+            VStack {
+                LogoImage();
+                NameAuthor();
+                Spacer()
+                    .frame(height: 30)
+                LoginForm();
+            }
     }
 }
 

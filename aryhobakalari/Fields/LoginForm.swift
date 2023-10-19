@@ -17,7 +17,7 @@ struct LoginForm: View {
     var body: some View {
         return Group {
             if login {
-                MainScreen()
+                //MainScreen()
             } else {
                 VStack {
                     TextField(
@@ -39,15 +39,25 @@ struct LoginForm: View {
                     
                     Spacer()
                         .frame(height: 12)
-                    
                     Button("Přihlásit se") {
-                        firstLogin(username: username, password: password)
+                        firstLogin(username: username, password: password) {success in
+                            if success {
+                                print("Login successful")
+                                login = true
+                            } else {
+                                print("Login failed")
+                            }
+                        }
                     }
                     .frame(width: 100)
                     .padding()
                     .border(colorScheme == .dark ? Color(red: 1.0, green: 1.0, blue: 1.0, opacity: 0.5) : Color(red: 0.949, green: 0.714, blue: 0.984), width: 3)
                     .background(Color(red: 0.983, green: 0.531, blue: 1.0))
                     .foregroundColor(.black)
+                    
+                    NavigationLink(destination: MainScreen(), isActive: $login) {
+                        EmptyView()
+                    }
                 }
             }
         }

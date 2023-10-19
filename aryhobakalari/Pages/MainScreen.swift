@@ -9,12 +9,17 @@ import SwiftUI
 
 struct MainScreen: View {
     var body: some View {
-        LogoImage()
-        NameAuthor()
-        Text("Beta")
-            .font(.subheadline)
-        
-        Text("Úspěšně přihlášeno.");
+        VStack {
+            LogoImage()
+            NameAuthor()
+            Spacer()
+                .frame(height: 20)
+            Text("Beta")
+                .font(.subheadline)
+            Spacer()
+                .frame(height: 50)
+            Text("Úspěšně přihlášeno.");
+        }
     }
 }
 

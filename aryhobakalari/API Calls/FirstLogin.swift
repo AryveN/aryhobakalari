@@ -8,15 +8,16 @@
 import Foundation
 import SwiftyJSON
 
-func firstLogin(username: String, password: String) -> Bool {
+func firstLogin(username: String, password: String, completion: @escaping (Bool) -> Void) {
     let headers = [
         "cookie": "ASP.NET_SessionId=iy2fik0clpsz0jrwyswdqwvq",
         "Content-Type": "application/x-www-form-urlencoded"
     ]
     
+    print("API called")
+    
     let localUsername = "&username=" + username
     let localPassword = "&password=" + password
-    var loginState = false
     
     let postData = NSMutableData(data: "client_id=ANDR".data(using: String.Encoding.utf8)!)
     postData.append("&grant_type=password".data(using: String.Encoding.utf8)!)
@@ -32,25 +33,20 @@ func firstLogin(username: String, password: String) -> Bool {
     
     let session = URLSession.shared
     let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
-        let bakalariData = JSON(data)
+        let bakalariData = JSON(data as Any)
         if (error != nil) {
-            print(error)
+            print(error as Any)
+            completion(false)
         } else {
             let httpResponse = response as? HTTPURLResponse
             if(httpResponse?.statusCode == 400) {
-                print(httpResponse?.statusCode)
-                print(bakalariData["error_description"].string)
+                print(httpResponse?.statusCode as Any)
+                print(bakalariData["error_description"].string as Any)
+                completion(false)
             } else {
-                print("uwu")
-                loginState = true
+                completion(true)
             }
-            
         }
     })
-    
     dataTask.resume()
-    if(loginState) {
-        return true
-    }
-    return false
 }
