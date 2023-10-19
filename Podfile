@@ -6,7 +6,7 @@ target 'aryhobakalari' do
   use_frameworks!
 
   # Pods for aryhobakalari
-  pod 'SwiftyJSON', '~> 4.0'
+  pod 'SwiftyJSON', :git =>'https://github.com/SwiftyJSON/SwiftyJSON.git'
 
   target 'aryhobakalariTests' do
     inherit! :search_paths
