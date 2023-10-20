@@ -7,12 +7,19 @@
 
 import Foundation
 import SwiftyJSON
+import SwiftUI
 
 func firstLogin(username: String, password: String, completion: @escaping (Bool) -> Void) {
     let headers = [
         "cookie": "ASP.NET_SessionId=iy2fik0clpsz0jrwyswdqwvq",
         "Content-Type": "application/x-www-form-urlencoded"
     ]
+    
+    var isLoading: Bool = true
+    
+    if (isLoading) {
+        ProgressView("Přihlašování...")
+    }
     
     print("API called")
     
@@ -36,14 +43,17 @@ func firstLogin(username: String, password: String, completion: @escaping (Bool)
         let bakalariData = JSON(data as Any)
         if (error != nil) {
             print(error as Any)
+            isLoading = false
             completion(false)
         } else {
             let httpResponse = response as? HTTPURLResponse
             if(httpResponse?.statusCode == 400) {
                 print(httpResponse?.statusCode as Any)
                 print(bakalariData["error_description"].string as Any)
+                isLoading = false
                 completion(false)
             } else {
+                isLoading = false
                 completion(true)
             }
         }
