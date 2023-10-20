@@ -1,19 +1,20 @@
 # This workflow will build a Swift project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-swift
-
-name: Swift
-
+name: Testing
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
-    branches: [ "main" ]
-
+    branches:
+    - main
 jobs:
-  build:
-
-    runs-on: macos-latest
-
+  test:
+    name: Testing Swift Package and iOS app
+    runs-on: macOS-latest
     steps:
-    - name: iOS Build Action
-      uses: yukiarrr/ios-build-action@v1.11.0
+      - name: Checkout repository
+        uses: actions/checkout@v1
+      - name: Force XCode 11.3
+        run: sudo xcode-select -switch /Applications/Xcode_11.3.app
+      - name: Testing Swift package
+        run: exec ./.github/scripts/test_swift_package.sh
+      - name: Testing iOS app
+        run: exec ./.github/scripts/test_app.sh
